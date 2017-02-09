@@ -1,0 +1,22 @@
+/*
+    Override Bootstrap
+*/
+/* 
+    Created on : 09/02/2017, 4:20:54 PM
+    Author     : luoru
+*/
+
+.wrapper{
+    width: 980px;
+    margin: 0 auto;
+}
+
+#dashboard-side{
+    background: #f2f2f2; 
+    min-height: 500px;
+}
+
+#dashboard-main{
+    background: #f2f2f2;
+    min-height: 500px;
+}
