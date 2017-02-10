@@ -5,6 +5,7 @@ class User_model extends CI_Model {
     /**
      * @usage :
      * Single: $this->user_model-> get(2)
+     * Multiple: $this->user_model-> get(array())
      * All:    $this->user_model->get();
      * 
      * @param number $user_id
@@ -12,7 +13,9 @@ class User_model extends CI_Model {
     public function get($user_id = null) {
         if ($user_id === null) {
             $q = $this->db->get('user');
-        } else {
+        } elseif(is_array($user_id)){ // now input an array
+            $q = $this->db->get_where('user', $user_id);
+        }else { // now input one specific number
             $q = $this->db->get_where('user', array('user_id' => $user_id));
         }
         return $q->result_array();

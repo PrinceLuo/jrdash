@@ -7,6 +7,10 @@
  */
 
 class Home extends CI_Controller {
+    
+    function __construct() {
+        parent::__construct();
+    }
 
     public function index() {
         $this->load->view('home/inc/header_view');
@@ -14,7 +18,14 @@ class Home extends CI_Controller {
         $this->load->view('home/inc/footer_view');
     }
 
-    public function test() {
+//    public function code(){
+//        
+//        //$this->load->library('encrypt');
+//        //echo $this->encrypt->encode('My Secrit Password');
+//        echo hash('sha256', 'custom'.SALT);
+//    }
+
+        public function test() {
 
         /**
          * Load the database manually
