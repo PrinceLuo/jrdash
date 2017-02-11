@@ -1,6 +1,6 @@
 <div class="row">
     <div class="span6">
-        <form id="login_form" class="form-horizontal" method="post" action="<?php echo site_url('user/login'); ?>">
+        <form id="login_form" class="form-horizontal" method="post" action="<?php /*echo site_url('user/login')*/echo site_url('dashboard'); ?>">
             <div class="control-group">
                 <label class="control-label">Login</label>
                 <div class="controls" >
@@ -26,11 +26,11 @@
 $(function(){
     //alert('It work!');
     $("#login_form").submit(function(e){
-        //e.preventDefault();
+        e.preventDefault();
         var url = $(this).attr('action');
         var postData = $(this).serialize();
         $.post(url, postData, function(o){
-            if(o.result == 1){
+            if(o.result === 1){
                 //alert('Good login!');
                 window.location.href='<?=site_url('dashboard')?>';
             }else{
