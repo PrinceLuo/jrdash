@@ -1,6 +1,6 @@
 <div class="row">
     <div class="span6">
-        <form id="login_form" class="form-horizontal" method="post" action="<?php /*echo site_url('user/login')*/echo site_url('dashboard'); ?>">
+        <form id="login_form" class="form-horizontal" method="post" action="<?php echo site_url('user/login'); ?>">
             <div class="control-group">
                 <label class="control-label">Login</label>
                 <div class="controls" >
@@ -19,6 +19,7 @@
                 </div>
             </div>
         </form>
+        <a href="<?=site_url('home/register')?>">Register</a>
     </div>
 </div>
 

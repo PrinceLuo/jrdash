@@ -27,7 +27,7 @@ class User_model extends CI_Model {
      * @param array $data
      * @return type
      */
-    public function insert($data) {
+    public function insert($data=array()) {
 
         $this->db->insert('user', $data);
         return $this->db->insert_id();

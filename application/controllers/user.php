@@ -31,6 +31,45 @@ class User extends CI_Controller {
         
         //print_r($result);
     }
+    public function register(){      
+        // The reason of not using the $_POST['login']
+        // or $_POST['password']
+        // is because 1. fix any new line \r\n
+        // 2. agains XXS
+        $this->form_validation->set_rules('login','Login','required|min_length[4]|max_length[16]|is_unique[user.login]');
+        $this->form_validation->set_rules('email','Email','required|valid_email|is_unique[user.email]');
+        $this->form_validation->set_rules('password','Password','required|min_length[4]|max_length[16]|matches[confirm_password]');
+    
+        // Try it funny~~
+        //$this->form_validation->set_message('required','Only the dog knows!');      
+        if($this->form_validation->run()==false){
+            //echo validation_errors();
+            $this->output->set_output(json_encode(['result'=>0, 'error'=>$this->form_validation->error_array()]));
+            return false;
+        }
+        $login=$this->input->post('login');  
+        $email=$this->input->post('email');  
+        $password=$this->input->post('password');
+        $confirm_password=$this->input->post('confirm_password');
+        $user_id=$this->user_model->insert(array(
+            'login'=>$login,
+            'password'=>hash('sha256',$password.SALT),
+            'email'=>$email
+        ));
+        
+        $this->output->set_content_type('application_json');
+        if($user_id){
+            //print_r($result);
+            $this->session->set_userdata(['user_id'=>$user_id]);
+            
+            $this->output->set_output(json_encode(['result'=>1]));
+            
+            return false;
+        }
+        $this->output->set_output(json_encode(['result'=>0, 'error'=>'Fail creating user!']));
+        
+        //print_r($result);
+    }
 
         public function get() {
 
@@ -41,11 +80,10 @@ class User extends CI_Controller {
         //$this->output->enable_profiler(TRUE);
     }
 
-    public function insert() {
+    public function insert($data=array()) {
         
-        $result = $this->user_model->insert(
-                array('login'=>'Jethro'));
-        print_r($result);
+        $result = $this->user_model->insert($data);
+        return $result;
         
         // for debugging
         //$this->output->enable_profiler(TRUE);

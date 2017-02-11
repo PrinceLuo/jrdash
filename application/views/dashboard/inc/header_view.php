@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <title>Test</title>
+        <title>jrDash_CI</title>
         <link rel="stylesheet" href="<?php base_url() ?>public/css/bootstrap.min.css" />
         <link rel="stylesheet" href="<?php base_url() ?>public/css/style.css" />
         <script src="<?php base_urL() ?>public/js/jquery.js" ></script>
