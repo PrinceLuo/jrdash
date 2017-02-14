@@ -21,6 +21,7 @@ class User_model extends CI_Model {
         return $q->result_array();
     }
 
+    // -------------------------------------------------------------------------
     /**
      * @usage $result = $this->user_model->insert array('login'=>'Jethro'));
      * 
@@ -33,6 +34,7 @@ class User_model extends CI_Model {
         return $this->db->insert_id();
     }
 
+    // -------------------------------------------------------------------------
     /**
      * @usage $result = $this->user_model->update(
       array('login'=>'Prince'), 4);
@@ -47,6 +49,7 @@ class User_model extends CI_Model {
         return $this->db->affected_rows();
     }
 
+    // -------------------------------------------------------------------------
     /**
      * @usage $result = $this->user_model->delete(number);
      * @param number $user_id

@@ -1,6 +1,6 @@
 <div class="row">
     <div class="span6">
-        <form id="login_form" class="form-horizontal" method="post" action="<?php echo site_url('user/login'); ?>">
+        <form id="login_form" class="form-horizontal" method="post" action="<?php echo site_url('api/login'); ?>">
             <div class="control-group">
                 <label class="control-label">Login</label>
                 <div class="controls" >
