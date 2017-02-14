@@ -16,9 +16,17 @@ var Template = function () {
 //        output+='<span class="option">';
 //        var data_completed=(obj.completed===1)?0:1;
 //        var data_completed_text=(obj.completed===1)?'<i ':1;
-        output += '<div id="todo_' + obj.todo_id + '">';
+        if(obj.completed==1){          
+            output+='<div id="todo_"'+obj.todo_id+'" class="todo_complete">';
+        }else{
+            output+='<div id="todo_"'+obj.todo_id+'">';
+        }        
         output += '<span>' + obj.content + '</span>';
-        output+='<a data-id="'+obj.todo_id+'" class="todo_delete" href="api/delete_todo">delete</a>';
+        var data_completed=(obj.completed==1)?0:1;
+        var data_completed_text=(obj.completed==1)?'<i class="icon-share-alt"></i>':'<i class="icon-flag"></i>';
+        output+= '<a href="api/update_todo" data-id="'+obj.todo_id+'" class="todo_update" data-completed="'+data_completed+'">'+data_completed_text+'</a>';
+        
+        output+='<a data-id="'+obj.todo_id+'" class="todo_delete" href="api/delete_todo"><i class="icon-trash"></i></a>';
         output += '</div>';
         return output;
     };
