@@ -21,7 +21,6 @@ var Event = function () {
                 if (o.result == 1) {
                     Result.success('Success adding Todo!');
                     var output = '';
-
                     output += Template.todo(o.data[0]);
 
                     $('#list_todo').append(output);

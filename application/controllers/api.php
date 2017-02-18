@@ -4,6 +4,9 @@ class Api extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
+        $this->load->model('user_model');
+        $this->load->model('todo_model');
+        $this->load->model('note_model');
     }
 
     private function _require_login() {
@@ -27,7 +30,6 @@ class Api extends CI_Controller {
         // 2. agains XXS
         $login = $this->input->post('login', TRUE);
         $password = $this->input->post('password', TRUE);
-        $this->load->model('user_model');
         $result = $this->user_model->get(array(
             'login' => $login,
             'password' => hash('sha256', $password . SALT)));
@@ -82,18 +84,18 @@ class Api extends CI_Controller {
 
     // -------------------------------------------------------------------------
     public function get_todo($id = null) {
+
         $this->_require_login();
         if ($id != null) {
-            $this->db->where(array(
+            $result = $this->todo_model->get([
                 'todo_id' => $id,
                 'user_id' => $this->session->userdata('user_id')
-            ));
+            ]);
         } else {
-            $this->db->where('user_id', $this->session->userdata('user_id'));
+            $result = $this->todo_model->get([
+                'user_id' => $this->session->userdata('user_id')
+            ]);
         }
-
-        $query = $this->db->get('todo');
-        $result = $query->result();
         $this->output->set_output(json_encode($result));
     }
 
@@ -109,19 +111,19 @@ class Api extends CI_Controller {
             )));
             return false;
         }
-        $result = $this->db->insert('todo', array(
+        $insert_id = $this->todo_model->insert(array(
             'content' => $this->input->post('content'),
             'user_id' => $this->session->userdata('user_id')
         ));
-        if ($result) {
-            // Get the freshest for the DOM            
-            $query = $this->db->get_where('todo', array(
-                'todo_id' => $this->db->insert_id()
-                    // The insert ID number when performing database inserts
+        if ($insert_id) {
+            // Get the freshest for the DOM 
+            $result = $this->todo_model->get(array(
+                'todo_id' => $insert_id,
+                'user_id' => $this->session->userdata('user_id')
             ));
             $this->output->set_output(json_encode([
                 'result' => 1,
-                'data' => $query->result()
+                'data' => $result
             ]));
             return false;
         }
@@ -138,10 +140,7 @@ class Api extends CI_Controller {
         $this->_require_login();
         $todo_id = $this->input->post('todo_id');
         $completed = $this->input->post('completed');
-
-        $this->db->where(array('todo_id' => $todo_id));
-        $this->db->update('todo',array('completed' => $completed));
-        $result = $this->db->affected_rows();
+        $result = $this->todo_model->update(array('completed' => $completed), $todo_id);
         if ($result) {
             $this->output->set_output(json_encode(array('result' => 1)));
             return false;
@@ -155,7 +154,7 @@ class Api extends CI_Controller {
 
         // testing
         $this->_require_login();
-        $result = $this->db->delete('todo', array(
+        $result = $this->todo_model->delete(array(
             'todo_id' => $this->input->post('todo_id'),
             'user_id' => $this->session->userdata('user_id')
         ));
@@ -174,7 +173,18 @@ class Api extends CI_Controller {
 
     // -------------------------------------------------------------------------
     public function get_note() {
-        
+        $this->_require_login();
+        if ($id != null) {
+            $result = $this->note_model->get([
+                'note_id' => $id,
+                'user_id' => $this->session->userdata('user_id')
+            ]);
+        } else {
+            $result = $this->note_model->get([
+                'user_id' => $this->session->userdata('user_id')
+            ]);
+        }
+        $this->output->set_output(json_encode($result));
     }
 
     // -------------------------------------------------------------------------

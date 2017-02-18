@@ -6,7 +6,16 @@ class Test extends CI_Controller {
 
         parent::__construct();
         $this->load->model('user_model');
+////        $result = $this->user_model->get();
+//        $result = $this->user_model->update(array('password'=>'rookie'), "17");
+        $result= $this->user_model->insert_update(['password'=>hash('sha256', 'Morph'. SALT)],"17");
+        echo '<pre>';
+        print_r($result);
+        echo '</pre>';
     }
+
+    public function index(){$this->output->enable_profiler(true);}
+
 
     public function test_get() {
 

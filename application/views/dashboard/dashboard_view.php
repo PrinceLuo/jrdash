@@ -12,6 +12,6 @@
             <textarea rows="4" cols="50" name="content"></textarea>
             <input type="submit" value="Create">
         </form>
+        <div id="list_note"><!-- Dynamic --></div>
     </div>
 </div>
-Dashboard
