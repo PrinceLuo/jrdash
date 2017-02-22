@@ -2,15 +2,15 @@
 <html lang="en">
     <head>
         <title>jrDash_CI</title>
-        <link rel="icon" href="/jrdash/public/img/punch.jpg" type="image/jpg">
-        <link rel="stylesheet" href="<?php base_url() ?>public/css/bootstrap.min.css" />
-        <link rel="stylesheet" href="<?php base_url() ?>public/css/style.css" />
-        <script src="<?php base_urL() ?>public/js/jquery.js" ></script>
-        <script src="<?php base_url() ?>public/js/bootstrap.js" ></script>
-        <script src="<?php base_url() ?>public/js/jrdash/dashboard.js" ></script>
-        <script src="<?php base_url() ?>public/js/jrdash/dashboard/template.js" ></script>
-        <script src="<?php base_url() ?>public/js/jrdash/dashboard/event.js" ></script>
-        <script src="<?php base_url() ?>public/js/jrdash/dashboard/result.js" ></script>
+        <link rel="icon" href="/jrdash/public/self-made/img/punch.jpg" type="image/jpg">
+        <link rel="stylesheet" href="<?php base_url() ?>public/third-party/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="<?php base_url() ?>public/self-made/css/style.css" />
+        <script src="<?php base_urL() ?>public/third-party/js/jquery.js" ></script>
+        <script src="<?php base_url() ?>public/third-party/js/bootstrap.js" ></script>
+        <script src="<?php base_url() ?>public/self-made/js/jrdash/dashboard.js" ></script>
+        <script src="<?php base_url() ?>public/self-made/js/jrdash/dashboard/template.js" ></script>
+        <script src="<?php base_url() ?>public/self-made/js/jrdash/dashboard/event.js" ></script>
+        <script src="<?php base_url() ?>public/self-made/js/jrdash/dashboard/result.js" ></script>
         <script>
             $(function () {
                 // Initial the Dashboard Application

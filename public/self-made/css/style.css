@@ -26,6 +26,15 @@
 }
 
 /** Generic Stuff */
+.ajax-loader, .ajax-loader-gray{
+    background: url('../img/ajax-loader-white.gif');
+    width: 16px;
+    height: 16px;
+}
+.ajax-loader-gray{
+    background: url('../img/ajax-loader-gray.gif');
+}
+
 .hide{
     display: none;
 }

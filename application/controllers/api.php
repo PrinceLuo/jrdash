@@ -117,13 +117,18 @@ class Api extends CI_Controller {
         ));
         if ($insert_id) {
             // Get the freshest for the DOM 
-            $result = $this->todo_model->get(array(
-                'todo_id' => $insert_id,
-                'user_id' => $this->session->userdata('user_id')
-            ));
+//            $result = $this->todo_model->get(array(
+//                'todo_id' => $insert_id,
+//                'user_id' => $this->session->userdata('user_id')
+//            ));
+            // No need to do another Get() just grab the data we had
             $this->output->set_output(json_encode([
                 'result' => 1,
-                'data' => $result
+                'data' => array(
+                    'todo_id' => $insert_id,
+                    'content' => $this->input->post('content'),
+                    'completed' => 0
+                )
             ]));
             return false;
         }
@@ -152,15 +157,11 @@ class Api extends CI_Controller {
     // -------------------------------------------------------------------------
     public function delete_todo() {
 
-        // testing
         $this->_require_login();
         $result = $this->todo_model->delete(array(
             'todo_id' => $this->input->post('todo_id'),
             'user_id' => $this->session->userdata('user_id')
         ));
-
-//        print_r('Where?');
-//        die('Testing!');
         if ($result) {
             $this->output->set_output(json_encode(array('result' => 1)));
             return false;
@@ -172,7 +173,7 @@ class Api extends CI_Controller {
     }
 
     // -------------------------------------------------------------------------
-    public function get_note() {
+    public function get_note($id = null) {
         $this->_require_login();
         if ($id != null) {
             $result = $this->note_model->get([
@@ -190,22 +191,85 @@ class Api extends CI_Controller {
     // -------------------------------------------------------------------------
     public function create_note() {
         $this->_require_login();
+        $this->form_validation->set_rules('title', 'Title', 'required|max_length[50]');
+        $this->form_validation->set_rules('content', 'Content', 'required|max_length[255]');
+        if ($this->form_validation->run() == false) {
+            $this->output->set_output(json_encode(array(
+                'result' => 0,
+                'error' => $this->form_validation->error_array()
+            )));
+            return false;
+        }
+        $insert_id = $this->note_model->insert(array(
+            'title' => $this->input->post('title'),
+            'content' => $this->input->post('content'),
+            'user_id' => $this->session->userdata('user_id')
+        ));
+        if ($insert_id) {
+            // Get the freshest for the DOM 
+//            $result = $this->note_model->get(array(
+//                'note_id' => $insert_id,
+//                'user_id' => $this->session->userdata('user_id')
+//            ));
+            // No need to do another Get() just grab the data we had
+            $this->output->set_output(json_encode([
+                'result' => 1,
+                'data' => array(
+                    'note_id' => $insert_id,
+                    'content' => $this->input->post('content'),
+                    'title' => $this->input->post('title')
+                )
+            ]));
+            return;
+        }
+        $this->output->set_output(json_encode(array(
+            'result' => 0,
+            'error' => 'Could not insert record.'
+        )));
     }
 
     // -------------------------------------------------------------------------
     public function update_note() {
 
-        // testing
         $this->_require_login();
         $note_id = $this->input->post('note_id');
+        $result = $this->note_model->update(array(
+            'title' => $this->input->post('title'),
+            'content' => $this->input->post('content'),
+                ), $note_id);
+//        if ($result) {
+//            $this->output->set_output(json_encode(array('result' => 1)));
+//            return;
+//        }
+        // Do not check $result because if no affected rows happen
+        // they will think it's an error
+        // But I prefer keep this in case the update fails,
+        // it can catch the error
+        if ($result) {
+            $this->output->set_output(json_encode(array('result' => 1)));
+            return;
+        }
+
+        $this->output->set_output(json_encode(array('result' => 0)));
+        return;
     }
 
     // -------------------------------------------------------------------------
     public function delete_note() {
 
-        // testing
         $this->_require_login();
-        $note_id = $this->input->post('note_id');
+        $result = $this->note_model->delete(array(
+            'note_id' => $this->input->post('note_id'),
+            'user_id' => $this->session->userdata('user_id')
+        ));
+        if ($result) {
+            $this->output->set_output(json_encode(array('result' => 1)));
+            return false;
+        }
+        $this->output->set_output(json_encode(array(
+            'result' => 0,
+            'message' => 'Could not delete record.'
+        )));
     }
 
     // -------------------------------------------------------------------------

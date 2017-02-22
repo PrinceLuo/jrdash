@@ -4,7 +4,9 @@
             <input type="text" name="content" placeholder="Create New Todo Item">
             <input type="submit" value="Create">
         </form>
-        <div id="list_todo"><!-- Dynamic --></div>
+        <div id="list_todo">
+            <div class="ajax-loader"></div>
+        </div>
     </div>
     <div id="dashboard-main" class="span8">
         <form id="create_note" action="<?= site_url("api/create_note") ?>" method="POST">
@@ -12,6 +14,8 @@
             <textarea rows="4" cols="50" name="content"></textarea>
             <input type="submit" value="Create">
         </form>
-        <div id="list_note"><!-- Dynamic --></div>
+        <div id="list_note">
+            <div class="ajax-loader-gray"></div>
+        </div>
     </div>
 </div>
